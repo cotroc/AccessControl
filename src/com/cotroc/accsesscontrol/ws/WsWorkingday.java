@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.cotroc.accsesscontrol.model.WorkingDay;
+import com.cotroc.accsesscontrol.model.Wday;
 
 @Path ("/workingday")
 public class WsWorkingday {
@@ -16,24 +16,43 @@ public class WsWorkingday {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/create")
-    public ResponseWrapper createWorkingDay(WorkingDay wday){
-		return null;
+    public ResponseWrapper createWorkingDay(Wday wday){
+		//System.out.println(wday.toString());
+		return RcWday.saveWdayData(wday);
 	}
 	
 	@POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update")
-    public ResponseWrapper updateWorkingDay(WorkingDay wday){
-       return null;
+    public ResponseWrapper updateWorkingDay(Wday wday){
+       return null; //RcWorkingday.updateWorkingDay(wday);
+    }
+	
+	@POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/savewday")
+    public ResponseWrapper saveWdayData(Wday wday){
+		System.out.println("WsWorkingday >> " + wday.getPunch_in().toString());
+        return RcWday.saveWdayData(wday);
     }
 	
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/getplaces")
+	@Path("/placelist")
 	public ResponseWrapper getPlaces() {
 		return RcPlace.getAllPlaces();
 	}
 
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getWday")
+	public ResponseWrapper getWday() {
+		
+		return null;
+	}
+	
 }

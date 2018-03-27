@@ -23,17 +23,13 @@ public class DbEmployee {
 		      preparedStmt.setString(4, emp.getTel());
 		      preparedStmt.execute();
 	          ResultSet rs = preparedStmt.getGeneratedKeys();
-	          if(rs.next()) {
-	        	  emp.setId((int)rs.getLong(1));
-	          } else {
-	        	  emp = null;
-	          }
+        	  emp.setId((int)rs.getLong(1));
 		} catch (SQLException e) {
+			emp = null;
 			System.out.println(e.getMessage());
 		}
 		return emp;
 	}
-	
 	
 	public static ArrayList<Employee> getAllEmployees() {
 		ArrayList<Employee> list = new ArrayList<Employee>();
@@ -58,6 +54,33 @@ public class DbEmployee {
 			System.out.println(e.getMessage());
 		}
 		return list;
+	}
+	
+	public static Employee findByAndroid_id(String android_id) {
+		Employee emp = null;
+		try {
+			String query = "SELECT * FROM employee where android_id=?";
+		    Connection conn = DbConn.getDataSource().getConnection();
+		    PreparedStatement preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		    preparedStmt.setString(1, android_id);
+		    ResultSet rs = preparedStmt.executeQuery();
+		    System.out.println(preparedStmt.toString());
+		    while (rs.next()) {
+		    	emp = new Employee();
+		    	emp.setId(rs.getInt("id"));
+				emp.setName(rs.getString("name"));
+				emp.setCi(rs.getString("ci"));
+				emp.setAddress(rs.getString("address"));
+				emp.setTel(rs.getString("tel"));
+				emp.setAndroid_id(rs.getString("android_id"));
+		    }
+			conn.close();
+			preparedStmt.close();
+			rs.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return emp;
 	}
 	
 	public static Employee findByCi(String ci) {
@@ -113,14 +136,5 @@ public class DbEmployee {
 			System.out.println(e.getMessage());
 		}
 		return added;
-	}
-
-	// @TODO check findByCi(ci) not null
-	public static Employee checkAndroidId(String ci, String id) {
-		Employee dbEmp = findByCi(ci);
-		if(!dbEmp.getAndroid_id().equals(id)) {
-			dbEmp = null;
-		}
-		return dbEmp;
 	}
 }

@@ -1,6 +1,8 @@
 package com.cotroc.accsesscontrol.ws;
 
-import com.cotroc.accsesscontrol.blogic.BlEmployee;
+import com.cotroc.accsesscontrol.blogic.EmployeeDao;
+import com.cotroc.accsesscontrol.blogic.NoDataException;
+import com.cotroc.accsesscontrol.blogic.DuplicatedDataException;
 import com.cotroc.accsesscontrol.model.Employee;
 
 import java.util.ArrayList;
@@ -8,46 +10,40 @@ import java.util.ArrayList;
 public class RcEmployee {
 	
 	public static ResponseWrapper createEmployee(Employee emp) {
-		ResponseWrapper rw;
-		Employee empCreated =  BlEmployee.create(emp);
-		if(empCreated != null) {
-			rw = new ResponseWrapper(true, emp.getName() + " creado con exito", empCreated);
-		} else {
-			rw = new ResponseWrapper(false, "no se pudo crear", null);
+		boolean success = false;
+		Employee empCreated = null;
+		String message = null;
+		try {
+			empCreated = EmployeeDao.create(emp);
+			success = true;
+			message = empCreated.getName() + " creado.";
+		} catch(DuplicatedDataException e) {
+			message = e.getMessage();
+		} catch(NoDataException e) {
+			message = e.getMessage();
 		}
-		return rw;
+		return new ResponseWrapper(success, message, empCreated);
 	}
 	
 	public static ResponseWrapper getAllEmployees() {
-		ArrayList<Employee> empList = BlEmployee.getAllEmployees();
+		ArrayList<Employee> empList = EmployeeDao.getAllEmployees();
 		return new ResponseWrapper(true, "Lista de empleados", empList);
 	}
 	
-	public static ResponseWrapper findEmployeeByCi(String ci) {
-		String statsMsg;
-		Employee empByCi = BlEmployee.findByCi(ci);
-		if(empByCi != null) {
-			statsMsg ="Encontrado " + empByCi.getName();
-		} else {
-			statsMsg = "No se encuenta emp con cedula: " + ci;
+	public static ResponseWrapper login(Employee emp) {
+		boolean success = false;
+		Employee logedEmp = null;
+		String message = null;
+		
+		try {
+			logedEmp = EmployeeDao.login(emp);
+			success = true;
+			message = logedEmp.getName() + " conectado";
+		} catch(NoDataException e) {
+			message = e.getMessage();
+		} catch(DuplicatedDataException e) {
+			message = e.getMessage();
 		}
-		return new ResponseWrapper((empByCi != null), statsMsg, empByCi);
+		return new ResponseWrapper(success, message, logedEmp);
 	}
-	
-	public static ResponseWrapper addAndroidId(Employee emp) {
-		boolean empToUpdate = BlEmployee.addAndroidId(emp);
-		return new ResponseWrapper(empToUpdate, emp.getName() + " actualizado", emp);
-	}
-	
-	public static ResponseWrapper checkAndroidId(String ci, String id) {
-		String statsMsg;
-		Employee empChecked = BlEmployee.checkAndroidId(ci, id);
-		if(empChecked != null) {
-			statsMsg = "Bienvenid@ " + empChecked.getName();
-		} else {
-			statsMsg = "Dispositivo invalido para " + BlEmployee.findByCi(ci).getName();
-		}
-		return new ResponseWrapper((empChecked != null), statsMsg, empChecked);
-	}
-	
 }
