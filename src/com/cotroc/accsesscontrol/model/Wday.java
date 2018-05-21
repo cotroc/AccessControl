@@ -1,6 +1,6 @@
 package com.cotroc.accsesscontrol.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.json.JSONObject;
 
@@ -9,8 +9,8 @@ public class Wday {
 	private int id;
 	private int id_emp;
 	private int id_place;
-	private Date punch_in;
-	private Date punch_out;
+	private LocalDateTime punch_in;
+	private LocalDateTime punch_out;
 	/*
 	 * V2
 	 *private Date h_in;
@@ -41,19 +41,19 @@ public class Wday {
 		this.id_place = id_place;
 	}
 
-	public Date getPunch_in() {
+	public LocalDateTime getPunch_in() {
 		return punch_in;
 	}
 
-	public void setPunch_in(Date punch_in) {
+	public void setPunch_in(LocalDateTime punch_in) {
 		this.punch_in = punch_in;
 	}
 
-	public Date getPunch_out() {
+	public LocalDateTime getPunch_out() {
 		return punch_out;
 	}
 
-	public void setPunch_out(Date punch_out) {
+	public void setPunch_out(LocalDateTime punch_out) {
 		this.punch_out = punch_out;
 	}
 
