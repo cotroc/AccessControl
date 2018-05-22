@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +25,7 @@ public class DbWday {
 	      PreparedStatement preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	      preparedStmt.setInt(1, wday.getId_emp());
 	      preparedStmt.setInt (2, wday.getId_place());
-	      preparedStmt.setString(3, dateToString(wday.getPunch_in(), dateFormat));
+	      // preparedStmt.setString(3, dateToString(wday.getPunch_in(), dateFormat));
 	      preparedStmt.execute();
 	      ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
 	      if (generatedKeys.next())
@@ -46,7 +46,7 @@ public class DbWday {
 		      Connection conn;
 		      conn = DbConn.getDataSource().getConnection();
 		      PreparedStatement preparedStmt = conn.prepareStatement(query);
-		      preparedStmt.setDate (1, (java.sql.Date) wday.getPunch_out());
+		      // preparedStmt.setDate (1, (java.sql.Date) wday.getPunch_out());
 		      preparedStmt.setInt(2, wday.getId());
 		      preparedStmt.execute();
 		      if(preparedStmt.executeUpdate() > 0) {
@@ -59,7 +59,7 @@ public class DbWday {
 		return wday;
 	}
 	
-public static ArrayList<Wday> getWday(int id_emp, Date date) {
+public static ArrayList<Wday> getWday(int id_emp, LocalDateTime localDateTime) {
 		ArrayList<Wday> wdayList = new ArrayList<>();
 		Connection conn;
 		PreparedStatement preparedStmt;
@@ -67,7 +67,7 @@ public static ArrayList<Wday> getWday(int id_emp, Date date) {
 
 		
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
+		// cal.setTime(localDateTime);
 		cal.set(Calendar.HOUR, 00);
 		cal.set(Calendar.MINUTE, 00);
 		cal.set(Calendar.SECOND, 00);
@@ -91,8 +91,8 @@ public static ArrayList<Wday> getWday(int id_emp, Date date) {
 	      preparedStmt.setInt(3, id_emp);
 	      rs = preparedStmt.executeQuery();
 	      while (rs.next()) {
-	    	  Date p_in = stringToDate(rs.getString("punch_in"), dateFormat);
-	    	  Date p_out = stringToDate(rs.getString("punch_out"), dateFormat);
+	    	  LocalDateTime p_in = stringToDate(rs.getString("punch_in"), dateFormat);
+	    	  LocalDateTime p_out = stringToDate(rs.getString("punch_out"), dateFormat);
 
 	  		  Wday wday = new Wday();
 	    	  wday.setId(rs.getInt("id"));
@@ -121,12 +121,12 @@ public static ArrayList<Wday> getWday(int id_emp, Date date) {
 		return sdf.format(date);
 	}
 	
-	private static Date stringToDate(String dateString, String stringFormat) {
+	private static LocalDateTime stringToDate(String dateString, String stringFormat) {
 		SimpleDateFormat sdf = new SimpleDateFormat(stringFormat);
-		Date date = null;
+		LocalDateTime date = null;
 		try {
-			date = sdf.parse(dateString);
-		} catch (ParseException e) {
+		//	date = sdf.parse(dateString);
+		} catch (Exception e) { // (ParseException e)
 			cLog("DbWday dateToString --> " + e.toString());
 			e.printStackTrace();
 		}
