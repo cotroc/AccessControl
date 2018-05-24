@@ -2,8 +2,8 @@ package com.cotroc.accsesscontrol.blogic;
 
 import java.util.ArrayList;
 
+import com.cotroc.accsesscontrol.dao.DbWday;
 import com.cotroc.accsesscontrol.model.Wday;
-import com.cotroc.accsesscontrol.persistence.DbWday;
 import com.cotroc.accsesscontrol.ws.ResponseWrapper;
 
 public class WdayDao {

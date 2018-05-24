@@ -1,4 +1,4 @@
-package com.cotroc.accsesscontrol.persistence;
+package com.cotroc.accsesscontrol.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import com.cotroc.accsesscontrol.model.Employee;
 
-public class DbEmployee {
+public class EmpDAO {
 	
 	public static Employee create(Employee emp) {
 		try {

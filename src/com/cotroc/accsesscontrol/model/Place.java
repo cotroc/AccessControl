@@ -1,5 +1,10 @@
 package com.cotroc.accsesscontrol.model;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean 
+@RequestScoped
 public class Place {
 	
 	private int id;
@@ -7,6 +12,10 @@ public class Place {
 	private String name;
 	private double lat;
 	private double lon;
+	
+	public Place() {
+		
+	}
 	
 	public int getId() {
 		return id;

@@ -2,10 +2,10 @@ package com.cotroc.accsesscontrol.blogic;
 
 import java.util.ArrayList;
 
+import com.cotroc.accsesscontrol.dao.EmpDAO;
 import com.cotroc.accsesscontrol.model.Employee;
-import com.cotroc.accsesscontrol.persistence.DbEmployee;
 
-public class EmployeeDao {
+public class EmpBL {
 	
 	public static Employee create(Employee emp) throws DuplicatedDataException, NoDataException {
 		Employee empCreated = null;
@@ -13,16 +13,16 @@ public class EmployeeDao {
 						emp.getCi(), emp.getTel())) {
 			throw new NoDataException("Faltan datos");
 		}
-		if(DbEmployee.existCi(emp.getCi())) {
+		if(EmpDAO.existCi(emp.getCi())) {
 			throw new DuplicatedDataException("Cedula duplicada");
 		} else {
-			empCreated = DbEmployee.create(emp);
+			empCreated = EmpDAO.create(emp);
 		}
 		return empCreated;
 	}
 	 
 	public static ArrayList<Employee> getAllEmployees() {
-		return DbEmployee.getAllEmployees();
+		return EmpDAO.getAllEmployees();
 	}
 		
 	public static Employee login(Employee emp) throws DuplicatedDataException, NoDataException {
@@ -30,8 +30,8 @@ public class EmployeeDao {
 			throw new NoDataException("Faltan datos");
 		
 		Employee employee = null;
-		Employee byCi = DbEmployee.findByCi(emp.getCi());
-		Employee byAndroid_id = DbEmployee.findByAndroid_id(emp.getAndroid_id());
+		Employee byCi = EmpDAO.findByCi(emp.getCi());
+		Employee byAndroid_id = EmpDAO.findByAndroid_id(emp.getAndroid_id());
 		
 		if(byCi == null)
 			throw new NoDataException("No existe emp con ci " + emp.getCi());
@@ -43,8 +43,8 @@ public class EmployeeDao {
 				throw new DuplicatedDataException("Dispositivo correspondiente a " + byAndroid_id.getName());
 			}
 		} else {
-			DbEmployee.addAndroidId(emp);
-			employee = DbEmployee.findByCi(emp.getCi());
+			EmpDAO.addAndroidId(emp);
+			employee = EmpDAO.findByCi(emp.getCi());
 		}
 		return employee;
 	}

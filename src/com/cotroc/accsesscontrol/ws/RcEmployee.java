@@ -1,6 +1,6 @@
 package com.cotroc.accsesscontrol.ws;
 
-import com.cotroc.accsesscontrol.blogic.EmployeeDao;
+import com.cotroc.accsesscontrol.blogic.EmpBL;
 import com.cotroc.accsesscontrol.blogic.NoDataException;
 import com.cotroc.accsesscontrol.blogic.DuplicatedDataException;
 import com.cotroc.accsesscontrol.model.Employee;
@@ -14,7 +14,7 @@ public class RcEmployee {
 		Employee empCreated = null;
 		String message = null;
 		try {
-			empCreated = EmployeeDao.create(emp);
+			empCreated = EmpBL.create(emp);
 			success = true;
 			message = empCreated.getName() + " creado.";
 		} catch(DuplicatedDataException e) {
@@ -26,7 +26,7 @@ public class RcEmployee {
 	}
 	
 	public static ResponseWrapper getAllEmployees() {
-		ArrayList<Employee> empList = EmployeeDao.getAllEmployees();
+		ArrayList<Employee> empList = EmpBL.getAllEmployees();
 		return new ResponseWrapper(true, "Lista de empleados", empList);
 	}
 	
@@ -36,7 +36,7 @@ public class RcEmployee {
 		String message = null;
 		
 		try {
-			logedEmp = EmployeeDao.login(emp);
+			logedEmp = EmpBL.login(emp);
 			success = true;
 			message = logedEmp.getName() + " conectado";
 		} catch(NoDataException e) {

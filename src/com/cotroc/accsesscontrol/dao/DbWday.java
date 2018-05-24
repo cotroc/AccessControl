@@ -1,4 +1,4 @@
-package com.cotroc.accsesscontrol.persistence;
+package com.cotroc.accsesscontrol.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

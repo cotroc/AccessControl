@@ -1,9 +1,12 @@
 package com.cotroc.accsesscontrol.model;
 
 import java.time.LocalDateTime;
-
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import org.json.JSONObject;
 
+@ManagedBean 
+@RequestScoped
 public class Wday {
 
 	private int id;
@@ -17,6 +20,10 @@ public class Wday {
 	 *private Date h_out;
 	 */
 
+	public Wday() {
+		
+	}
+	
 	public int getId() {
 		return id;
 	}

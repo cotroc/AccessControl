@@ -2,8 +2,8 @@ package com.cotroc.accsesscontrol.blogic;
 
 import java.util.ArrayList;
 
+import com.cotroc.accsesscontrol.dao.DbPlace;
 import com.cotroc.accsesscontrol.model.Place;
-import com.cotroc.accsesscontrol.persistence.DbPlace;
 
 public class PlaceDao {
 
