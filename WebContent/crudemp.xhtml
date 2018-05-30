@@ -3,9 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html">
 	<h:head>
-		<h:title><h1>Alta - Baja - Modificacion</h1></h:title>
+		<h:title><h1>Administracion de empleados</h1></h:title>
 	</h:head>
 	<h:body>
-		
+		<h:form>
+			<p>
+				<h3>Busqueda</h3>
+				<h:outputLabel for="ci"> 
+					<h:outputText value="Cedula: " />
+				</h:outputLabel>
+				<h:inputText id="ci" value="#{empBean.employee.ci}" />
+				<h:commandButton id="find" value="Buscar" action="#{empBean.findEmpByCi()}"/>
+			</p>
+			<p>
+				<h3>Alta de empleado</h3>
+				<h:commandButton value="Nuevo" action="empcreate"/>
+			</p>
+			
+			<br/>
+		</h:form>
+		<h:outputLabel value="Status message: #{empBean.statusMessage}" />
+		<br/>
+		<h:outputLabel value="Empleado: #{empBean.empByCi.name}" />
 	</h:body>
 </html>

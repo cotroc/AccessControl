@@ -13,10 +13,6 @@ public class Employee {
 	private String tel;
 	private String u_id;
 	
-	public Employee() {
-		
-	}
-	
 	public int getId() {
 		return id;
 	}

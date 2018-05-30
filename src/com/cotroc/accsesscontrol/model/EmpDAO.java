@@ -1,4 +1,4 @@
-package com.cotroc.accsesscontrol.dao;
+package com.cotroc.accsesscontrol.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,11 +7,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.cotroc.accsesscontrol.model.Employee;
+import com.cotroc.accsesscontrol.blogic.CustomException;
+import com.cotroc.accsesscontrol.blogic.DuplicatedDataException;
+import com.cotroc.accsesscontrol.blogic.NoDataException;
 
 public class EmpDAO {
 	
-	public static Employee create(Employee emp) {
+	private final static String NoData = "Faltan datos.";
+	private final static String DuplicatedCi = "Cedula duplicada.";
+	private final static String NoEmp = "No existe empleado con esa cedula.";
+	
+	public static Employee create(Employee emp) throws CustomException, NoDataException, DuplicatedDataException {
+		Employee empCreated = null;
+		
+		if (existCi(emp.getCi())) {
+			throw new DuplicatedDataException(DuplicatedCi);
+		}
+		
+		if( emp == null || checkForNull(
+				emp.getName(),
+				emp.getAddress(),
+				emp.getCi(), 
+				emp.getTel())) {
+			throw new NoDataException(NoData);
+		}
+		
+		
 		try {
 			String query = "insert into employee (ci, name, address, tel) values (?, ?, ?, ?)";
 		      Connection conn;
@@ -23,12 +44,14 @@ public class EmpDAO {
 		      preparedStmt.setString(4, emp.getTel());
 		      preparedStmt.execute();
 	          ResultSet rs = preparedStmt.getGeneratedKeys();
-        	  emp.setId((int)rs.getLong(1));
+	          if(rs.next()) {
+	        	  empCreated = emp;
+	        	  empCreated.setId((int)rs.getLong(1));
+	          } 
 		} catch (SQLException e) {
-			emp = null;
-			System.out.println(e.getMessage());
+			throw new CustomException("No se pudo crear " + emp.getName() , e);
 		}
-		return emp;
+		return empCreated;
 	}
 	
 	public static ArrayList<Employee> getAllEmployees() {
@@ -83,7 +106,11 @@ public class EmpDAO {
 		return emp;
 	}
 	
-	public static Employee findByCi(String ci) {
+	public static Employee findByCi(String ci) throws NoDataException {
+		
+		if(ci.equals(""))
+			throw new NoDataException(NoData);
+		
 		Employee emp = null;
 		try {
 			String query = "SELECT * FROM employee where ci=?";
@@ -91,8 +118,7 @@ public class EmpDAO {
 		    PreparedStatement preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		    preparedStmt.setString(1, ci);
 		    ResultSet rs = preparedStmt.executeQuery();
-		    System.out.println(preparedStmt.toString());
-		    while (rs.next()) {
+		    if (rs.next()) {
 		    	emp = new Employee();
 		    	emp.setId(rs.getInt("id"));
 				emp.setName(rs.getString("name"));
@@ -100,7 +126,7 @@ public class EmpDAO {
 				emp.setAddress(rs.getString("address"));
 				emp.setTel(rs.getString("tel"));
 				emp.setAndroid_id(rs.getString("android_id"));
-		    }
+		    } 
 			conn.close();
 			preparedStmt.close();
 			rs.close();
@@ -110,12 +136,12 @@ public class EmpDAO {
 		return emp;
 	}
 	
-	public static boolean existCi(String ci) {
+	public static boolean existCi(String ci) throws NoDataException{
+		boolean exist = true;
 		if(findByCi(ci) == null) {
 			return false;
-		} else {
-			return true;
 		}
+		return exist;
 	}
 	
 	public static boolean addAndroidId(Employee emp) {
@@ -136,5 +162,15 @@ public class EmpDAO {
 			System.out.println(e.getMessage());
 		}
 		return added;
+	}
+	
+	private static boolean checkForNull(Object... objects) {
+		boolean isNull = false;
+		for(Object o : objects) {
+			if(o == null || o.equals("")) {
+				isNull = true;
+			}
+		}
+		return isNull;
 	}
 }

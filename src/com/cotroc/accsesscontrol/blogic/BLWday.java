@@ -2,17 +2,17 @@ package com.cotroc.accsesscontrol.blogic;
 
 import java.util.ArrayList;
 
-import com.cotroc.accsesscontrol.dao.DbWday;
 import com.cotroc.accsesscontrol.model.Wday;
+import com.cotroc.accsesscontrol.model.WdayDAO;
 import com.cotroc.accsesscontrol.ws.ResponseWrapper;
 
-public class WdayDao {
+public class BLWday {
 	
 	private static String sMessage = "Creado con exito";
 	private static String noData = "Faltan datos";
 	
 	public static Wday saveWdayData(Wday wday) throws NoDataException {
-		ArrayList<Wday> wdayList = DbWday.getWday(wday.getId_emp(), 
+		ArrayList<Wday> wdayList = WdayDAO.getWday(wday.getId_emp(), 
 														wday.getPunch_in());
 		Wday wdayRecorded = null;
 		
@@ -43,11 +43,11 @@ public class WdayDao {
 	}
 	
 	private static Wday create(Wday wday) {
-		return DbWday.create(wday);
+		return BLWday.create(wday);
 	}
 	
 	private static Wday update(Wday wday){
-		return DbWday.update(wday);
+		return BLWday.update(wday);
 	}
 	
 	/*
@@ -71,7 +71,7 @@ public class WdayDao {
 	private static ArrayList<Wday> getWdayList(Wday wday) throws NoDataException {
 		if(checkForNull(wday.getId_emp(), wday.getPunch_in()))
 			throw new NoDataException(noData);
-		return DbWday.getWday(wday.getId_emp(), wday.getPunch_in());
+		return WdayDAO.getWday(wday.getId_emp(), wday.getPunch_in());
 	}
 	
 	public static ResponseWrapper wsSaveWdayData(Wday wday) {

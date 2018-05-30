@@ -1,4 +1,4 @@
-package com.cotroc.accsesscontrol.dao;
+package com.cotroc.accsesscontrol.model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.cotroc.accsesscontrol.model.Place;
-
-public class DbPlace {
+public class PlaceDAO {
 
 	public static ArrayList<Place> getAllPlaces() {
 		ArrayList<Place> placeList = new ArrayList();

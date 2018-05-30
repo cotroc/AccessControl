@@ -1,6 +1,7 @@
 package com.cotroc.accsesscontrol.ws;
 
-import com.cotroc.accsesscontrol.blogic.EmpBL;
+import com.cotroc.accsesscontrol.blogic.BLEmp;
+import com.cotroc.accsesscontrol.blogic.CustomException;
 import com.cotroc.accsesscontrol.blogic.NoDataException;
 import com.cotroc.accsesscontrol.blogic.DuplicatedDataException;
 import com.cotroc.accsesscontrol.model.Employee;
@@ -14,19 +15,21 @@ public class RcEmployee {
 		Employee empCreated = null;
 		String message = null;
 		try {
-			empCreated = EmpBL.create(emp);
+			empCreated = BLEmp.create(emp);
 			success = true;
 			message = empCreated.getName() + " creado.";
 		} catch(DuplicatedDataException e) {
 			message = e.getMessage();
 		} catch(NoDataException e) {
 			message = e.getMessage();
+		} catch (CustomException e) {
+			message = e.getMessage();
 		}
 		return new ResponseWrapper(success, message, empCreated);
 	}
 	
 	public static ResponseWrapper getAllEmployees() {
-		ArrayList<Employee> empList = EmpBL.getAllEmployees();
+		ArrayList<Employee> empList = BLEmp.getAllEmployees();
 		return new ResponseWrapper(true, "Lista de empleados", empList);
 	}
 	
@@ -36,7 +39,7 @@ public class RcEmployee {
 		String message = null;
 		
 		try {
-			logedEmp = EmpBL.login(emp);
+			logedEmp = BLEmp.login(emp);
 			success = true;
 			message = logedEmp.getName() + " conectado";
 		} catch(NoDataException e) {

@@ -1,4 +1,4 @@
-package com.cotroc.accsesscontrol.dao;
+package com.cotroc.accsesscontrol.model;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;

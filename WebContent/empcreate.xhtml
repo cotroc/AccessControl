@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:form>
+			<h3>Nuevo empleado</h3>
+			<h:outputLabel for="name"> 
+				<h:outputText value="Nombre: " />
+			</h:outputLabel>
+			<h:inputText id="name" value="#{empBean.employee.name}" />
+			<br/>
+			
+			<h:outputLabel for="ci"> 
+				<h:outputText value="Cedula: " />
+			</h:outputLabel>
+			<h:inputText id="ci" value="#{empBean.employee.ci}" />
+			<br/>
+			
+				<h:outputLabel for="address"> 
+				<h:outputText value="Direccion: " />
+			</h:outputLabel>
+			<h:inputText id="address" value="#{empBean.employee.address}" />
+			<br/>
+			
+			<h:outputLabel for="tel"> 
+				<h:outputText value="Telefono: " />
+			</h:outputLabel>
+			<h:inputText id="tel" value="#{empBean.employee.tel}" />
+			<br/>
+			<h:commandButton id="cmdInsert" value="Agregar" action="#{empBean.newEmp()}"/>
+			<br/>
+			<h:commandButton id="navCrud" value="Atras" action="crudemp"/>
+		</h:form>
+		<h:outputLabel value="Mensaje: #{empBean.statusMessage}" />
+</html>

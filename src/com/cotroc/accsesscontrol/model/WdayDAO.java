@@ -1,4 +1,4 @@
-package com.cotroc.accsesscontrol.dao;
+package com.cotroc.accsesscontrol.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.cotroc.accsesscontrol.model.Wday;
-
-public class DbWday {
+public class WdayDAO {
 	
 	private static String dateFormat = "yyyy-MM-dd HH:mm:ss";
 
