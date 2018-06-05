@@ -2,7 +2,6 @@ package com.cotroc.accsesscontrol.ws;
 
 import com.cotroc.accsesscontrol.blogic.BLEmp;
 import com.cotroc.accsesscontrol.blogic.CustomException;
-import com.cotroc.accsesscontrol.blogic.NoDataException;
 import com.cotroc.accsesscontrol.blogic.DuplicatedDataException;
 import com.cotroc.accsesscontrol.model.Employee;
 
@@ -19,8 +18,6 @@ public class RcEmployee {
 			success = true;
 			message = empCreated.getName() + " creado.";
 		} catch(DuplicatedDataException e) {
-			message = e.getMessage();
-		} catch(NoDataException e) {
 			message = e.getMessage();
 		} catch (CustomException e) {
 			message = e.getMessage();
@@ -42,7 +39,7 @@ public class RcEmployee {
 			logedEmp = BLEmp.login(emp);
 			success = true;
 			message = logedEmp.getName() + " conectado";
-		} catch(NoDataException e) {
+		} catch(CustomException e) {
 			message = e.getMessage();
 		} catch(DuplicatedDataException e) {
 			message = e.getMessage();

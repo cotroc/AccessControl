@@ -9,19 +9,14 @@ import java.util.ArrayList;
 
 import com.cotroc.accsesscontrol.blogic.CustomException;
 import com.cotroc.accsesscontrol.blogic.DuplicatedDataException;
-import com.cotroc.accsesscontrol.blogic.NoDataException;
 
 public class EmpDAO {
 	
-	private final static String NoData = "Faltan datos.";
-	private final static String DuplicatedCi = "Cedula duplicada.";
-	private final static String NoEmp = "No existe empleado con esa cedula.";
-	
-	public static Employee create(Employee emp) throws CustomException, NoDataException, DuplicatedDataException {
+	public static Employee create(Employee emp) throws CustomException, DuplicatedDataException {
 		Employee empCreated = null;
 		
 		if (existCi(emp.getCi())) {
-			throw new DuplicatedDataException(DuplicatedCi);
+			throw new DuplicatedDataException("Ya existe empleado con cedula " + emp.getCi());
 		}
 		
 		if( emp == null || checkForNull(
@@ -29,9 +24,8 @@ public class EmpDAO {
 				emp.getAddress(),
 				emp.getCi(), 
 				emp.getTel())) {
-			throw new NoDataException(NoData);
+			throw new CustomException("Faltan datos");
 		}
-		
 		
 		try {
 			String query = "insert into employee (ci, name, address, tel) values (?, ?, ?, ?)";
@@ -54,7 +48,13 @@ public class EmpDAO {
 		return empCreated;
 	}
 	
-	public static ArrayList<Employee> getAllEmployees() {
+	public static Employee update(Employee emp) throws CustomException {
+		Employee empUpdated = null;
+		
+		return empUpdated;
+	}
+	
+ 	public static ArrayList<Employee> getAllEmployees() {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
 			Connection conn = DbConn.getDataSource().getConnection();
@@ -79,6 +79,7 @@ public class EmpDAO {
 		return list;
 	}
 	
+	/*
 	public static Employee findByAndroid_id(String android_id) {
 		Employee emp = null;
 		try {
@@ -105,11 +106,12 @@ public class EmpDAO {
 		}
 		return emp;
 	}
+	*/
 	
-	public static Employee findByCi(String ci) throws NoDataException {
+	public static Employee findByCi(String ci) throws CustomException{
 		
 		if(ci.equals(""))
-			throw new NoDataException(NoData);
+			throw new CustomException("Falta cedula");
 		
 		Employee emp = null;
 		try {
@@ -131,12 +133,12 @@ public class EmpDAO {
 			preparedStmt.close();
 			rs.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CustomException("SQL Error", e);
 		}
 		return emp;
 	}
 	
-	public static boolean existCi(String ci) throws NoDataException{
+	public static boolean existCi(String ci) throws CustomException {
 		boolean exist = true;
 		if(findByCi(ci) == null) {
 			return false;
@@ -144,6 +146,7 @@ public class EmpDAO {
 		return exist;
 	}
 	
+	/*
 	public static boolean addAndroidId(Employee emp) {
 		boolean added = false;
 		try {
@@ -163,6 +166,7 @@ public class EmpDAO {
 		}
 		return added;
 	}
+	*/
 	
 	private static boolean checkForNull(Object... objects) {
 		boolean isNull = false;

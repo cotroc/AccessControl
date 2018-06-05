@@ -3,7 +3,6 @@ package com.cotroc.accesscontrol.view;
 import com.cotroc.accsesscontrol.blogic.DuplicatedDataException;
 import com.cotroc.accsesscontrol.blogic.BLEmp;
 import com.cotroc.accsesscontrol.blogic.CustomException;
-import com.cotroc.accsesscontrol.blogic.NoDataException;
 import com.cotroc.accsesscontrol.model.Employee;
 import javax.faces.bean.ManagedBean;
 
@@ -25,11 +24,15 @@ public class EmpBean {
 	public void setEmployee(Employee emp) {
 		this.employee = emp;
 	}
-	
+
 	public Employee getEmpByCi() {
 		return this.empByCi;
 	}
-
+	
+	public void setEmpByCi(Employee emp) {
+		this.empByCi = emp;
+	}
+	
 	public String getStatusMessage() {
 		return statusMessage;
 	}
@@ -38,15 +41,16 @@ public class EmpBean {
 		this.statusMessage = successMessage;
 	}
 
-	public Employee findEmpByCi() {
-		Employee empByCi = null;
+	public void findEmpByCi() {
+		empByCi = null;
 		try {
 			empByCi = BLEmp.findByCi(employee.getCi());
-		} catch (NoDataException e) {
+			if (empByCi == null) {
+				statusMessage = "no existe empleado con cedula " + employee.getCi();
+			}
+		} catch (CustomException e) {
 			statusMessage = e.getMessage();
 		}
-		
-		return empByCi;
 	}
 	
 	public void newEmp() {
@@ -57,8 +61,6 @@ public class EmpBean {
 		} catch (CustomException e) {
 			statusMessage = e.getMessage();
 		} catch (DuplicatedDataException e) {
-			statusMessage = e.getMessage();
-		} catch (NoDataException e) {
 			statusMessage = e.getMessage();
 		}
 	}

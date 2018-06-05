@@ -6,17 +6,12 @@ import com.cotroc.accsesscontrol.model.EmpDAO;
 import com.cotroc.accsesscontrol.model.Employee;
 
 public class BLEmp {
-	
-	private final static String NoData = "Faltan datos.";
-	private final static String NoUserByCi = "Cedula ingresada no existe: ";
-	private final static String IncorrectDevice = "Dispositivo incorrecto, correspondiente a: ";
-	private final static String EmptyString = "";
-	
-	public static Employee create(Employee emp) throws CustomException, DuplicatedDataException, NoDataException {
+		
+	public static Employee create(Employee emp) throws CustomException, DuplicatedDataException {
 		return EmpDAO.create(emp);
 	}
 	 
-	public static Employee findByCi(String ci) throws NoDataException {
+	public static Employee findByCi(String ci) throws CustomException {
 		return EmpDAO.findByCi(ci);
 	}
 	
@@ -24,14 +19,16 @@ public class BLEmp {
 		return EmpDAO.getAllEmployees();
 	}
 		
-	public static Employee login(Employee emp) throws DuplicatedDataException, NoDataException {
+ 	
+	public static Employee login(Employee emp) throws DuplicatedDataException, CustomException {
 		
 		Employee employee = null;
+		/*
 		Employee byCi = EmpDAO.findByCi(emp.getCi());
 		Employee byAndroid_id = EmpDAO.findByAndroid_id(emp.getAndroid_id());
 		
 		if(byCi == null)
-			throw new NoDataException(NoUserByCi + emp.getCi());
+			throw new CustomException(NoUserByCi + emp.getCi());
 		
 		if(byCi.getAndroid_id() != null) {
 			if(byCi.getCi().equals(byAndroid_id.getCi())) {
@@ -43,16 +40,8 @@ public class BLEmp {
 			EmpDAO.addAndroidId(emp);
 			employee = EmpDAO.findByCi(emp.getCi());
 		}
+		*/
 		return employee;
 	}
 	
-		private static boolean checkForNull(Object... objects) {
-			boolean isNull = false;
-			for(Object o : objects) {
-				if(o == null || o.equals(EmptyString)) {
-					isNull = true;
-				}
-			}
-			return isNull;
-		}
 }
