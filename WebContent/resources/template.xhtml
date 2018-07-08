@@ -2,10 +2,13 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<head>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<style>
 	.center {
 	 display: inline-block;
@@ -27,19 +30,21 @@
 					    <ui:include src="header.xhtml"></ui:include>
 					</ui:insert>
 		    	</div>
-		     	<div id="sidebar" class="center">
-					<ui:insert name="sidebar">
-						<ui:include src="sidebar.xhtml"></ui:include>
-					</ui:insert>
-		     	</div>
-				<div id="content" class="center" >
-					<ui:insert name="content">
-					    Add your content here or delete to use the default
-					</ui:insert>
+		    	<div class="row">
+			     	<div id="sidebar" class="col-4">
+						<ui:insert name="sidebar">
+							<ui:include src="sidebar.xhtml"></ui:include>
+						</ui:insert>
+			     	</div>
+					<div id="content" class="col-8" >
+						<ui:insert name="content">
+						    Add your content here or delete to use the default
+						</ui:insert>
+					</div>
 				</div>
 				<div id="footer" class="footer" >
 					<ui:insert name="footer">
-					    Add your footer here or delete to use the default
+					<ui:include src="footer.xhtml"></ui:include>
 					</ui:insert>
 				</div>
 		    </div>
@@ -48,7 +53,8 @@
 		    </div>
 		  </div>
 		</div>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 	</body>
 </html>

@@ -4,10 +4,28 @@
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
 	  xmlns:f="http://xmlns.jcp.org/jsf/core"> 
-			<nav class="nav flex-column">
-			  <a class="nav-link active" href="#">Active</a>
-			  <a class="nav-link" href="#">Link</a>
-			  <a class="nav-link" href="#">Link</a>
-			  <a class="nav-link disabled" href="#">Disabled</a>
-			</nav>
+
+	<div class="btn-group-vertical" role="group" aria-label="Basic example">
+	<a class="btn btn-outline-dark" href="index.xhtml" role="button">Inicio</a>
+	<button class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Empleados</button>
+   		<div class="dropdown-menu">
+   			<a class="dropdown-item" href="create_emp.xhtml">Alta</a>
+   			<a class="dropdown-item" href="delete_emp.xhtml">Baja</a>
+   			<a class="dropdown-item" href="update_emp.xhtml">Modificar</a>
+   		</div>
+	<button class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes</button>
+   		<div class="dropdown-menu">
+   			<a class="dropdown-item" href="#">Alta</a>
+   			<a class="dropdown-item" href="#">Baja</a>
+   			<a class="dropdown-item" href="#">Modificar</a>
+   		</div>
+	<button class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Obras</button>
+  		<div class="dropdown-menu">
+  			<a class="dropdown-item" href="#">Alta</a>
+  			<a class="dropdown-item" href="#">Baja</a>
+  			<a class="dropdown-item" href="#">Modificar</a>
+  		</div>
+	<a class="btn btn-outline-dark" href="#" role="button">Listados</a>
+	<a class="btn btn-outline-dark" href="#" role="button">Consultas</a>
+	</div>
 </html>

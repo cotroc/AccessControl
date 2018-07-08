@@ -12,6 +12,7 @@ public class EmpBean {
 	private Employee employee = new Employee();
 	private Employee empByCi;
 	private String statusMessage;
+	private String ci;
 	
 	public EmpBean() {
 		
@@ -40,11 +41,20 @@ public class EmpBean {
 	public void setStatusMessage(String successMessage) {
 		this.statusMessage = successMessage;
 	}
+	
+	public String getCi() {
+		return this.ci;
+	}
+	
+	public void setCi(String ci) {
+		this.ci = ci;
+	}
 
 	public void findEmpByCi() {
 		empByCi = null;
 		try {
-			empByCi = BLEmp.findByCi(employee.getCi());
+			empByCi = BLEmp.findByCi(ci);
+			statusMessage = empByCi.getName();
 			if (empByCi == null) {
 				statusMessage = "no existe empleado con cedula " + employee.getCi();
 			}
